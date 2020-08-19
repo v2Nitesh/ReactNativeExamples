@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React , {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -15,13 +15,28 @@ import {
  
 import AppHeader from './component/AppHeader';
 import StartGameScreen from './screens/StartGameScreen';
+import GameScreen from "./screens/GameScreen";
+
 
 const App: () => React$Node = () => {
+
+  const [userNumber, setUserNumbrer] = useState();
+
+  const startGameHandler = (selectedNumber) => {
+    setUserNumbrer(selectedNumber);
+  };
+
+  // let content = <StartGameScreen onStartGame={startGameHandler} />;
+  let content = <StartGameScreen onGameStart={startGameHandler} />;
+
+  if (userNumber) {
+    content =  <GameScreen userChoice={userNumber}/>;
+  }
+
   return (
-  
     <View style={styles.screen}>
       <AppHeader  title = "Guess a Number" />
-      <StartGameScreen/>
+      {content}
     </View>
   );
 };
@@ -30,42 +45,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   }
-  /*scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },*/
+
 });
 
 export default App;
